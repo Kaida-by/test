@@ -3,6 +3,7 @@
 namespace App\Listener;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class MyRequestListener
@@ -14,6 +15,10 @@ class MyRequestListener
      */
     public function onKernelRequest(RequestEvent $event): void
     {
+        $cookieTest = $event->getRequest()->cookies->get('my_id');
+        if (isset($cookieTest) && $cookieTest == 1) {
+            $event->setResponse(new Response('<p>Поздравляем, вы отправили нужную куку!</p>'));
+        }
         /*
          * Это listener, который слушает определённое событие.
          * Это событие называется kernel.request (класс Symfony\Component\HttpKernel\Event\RequestEvent).
