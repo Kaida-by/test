@@ -33,9 +33,13 @@ class User
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\JoinTable(name="user_product",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
+     *      )
      */
-    private $products;
+    protected $products;
 
     /**
      * @ORM\OneToOne(targetEntity="Profile", mappedBy="user")

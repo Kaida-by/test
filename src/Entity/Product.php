@@ -30,12 +30,6 @@ class Product
      */
     private $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="product")
-     * @Assert\NotBlank
-     */
-    private $user;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -61,18 +55,6 @@ class Product
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    public function setUser($user)
-    {
-        $this->user = $user;
 
         return $this;
     }

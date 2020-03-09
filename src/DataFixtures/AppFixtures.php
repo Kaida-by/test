@@ -22,27 +22,29 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
             for ($i = 0; $i < 10; $i++) {
-            $user = new User();
-            $user->setEmail($i . '@mail.ru');
-            $user->setPassword($i . 'qwertyqwerty');
 
-            if (isset($product)) {
-                $user->addProduct($product);
+                $user = new User();
+                $user->setEmail($i . '@mail.ru');
+                $user->setPassword($i . 'qwertyqwerty');
+
+                if (isset($product)) {
+                    $user->addProduct($manager->getRepository(Product::class)->find(rand(1, 10)));
+                    $user->addProduct($manager->getRepository(Product::class)->find(rand(1, 10)));
+                }
+
+                $manager->persist($user);
+
+                $profile = new Profile();
+                $profile->setUser($user);
+                $format = "Y,m,d";
+                $time = "2009,2,26";
+                $date = \DateTime::createFromFormat($format, $time);
+                $profile->setBirthDate($date);
+                $profile->setPhone('123456789');
+                $user->setProfile($profile);
+                $manager->persist($profile);
+
+                $manager->flush();
             }
-
-            $manager->persist($user);
-
-            $profile = new Profile();
-            $profile->setUser($user);
-            $format = "Y,m,d";
-            $time = "2009,2,26";
-            $date = \DateTime::createFromFormat($format, $time);
-            $profile->setBirthDate($date);
-            $profile->setPhone('123456789');
-            $user->setProfile($profile);
-            $manager->persist($profile);
-
-            $manager->flush();
-        }
     }
 }
