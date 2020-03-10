@@ -21,8 +21,8 @@ class AppFixtures extends Fixture
             $manager->persist($product);
             $manager->flush();
         }
-        for ($i = 0; $i < 10; $i++) {
 
+        for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setEmail($i . '@mail.ru');
             $user->setPassword($i . 'qwertyqwerty');
@@ -33,7 +33,6 @@ class AppFixtures extends Fixture
             }
 
             $manager->persist($user);
-
             $profile = new Profile();
             $profile->setUser($user);
             $format = "Y,m,d";

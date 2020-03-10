@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="users")
  */
 class User
 {
@@ -34,7 +36,7 @@ class User
 
     /**
      * @ORM\ManyToMany(targetEntity="Product")
-     * @ORM\JoinTable(name="user_product",
+     * @ORM\JoinTable(name="users_products",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
      *      )
@@ -42,7 +44,7 @@ class User
     protected $products;
 
     /**
-     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="users")
      * @Assert\NotBlank
      */
     private $profile;
@@ -52,53 +54,55 @@ class User
         $this->products = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function addProduct(Product $product)
+    public function addProduct(Product $product): self
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
         }
+
+        return $this;
     }
 
-    public function getProduct()
+    public function getProduct(): ?string
     {
         return $this->products;
     }
 
-    public function getProfile()
+    public function getProfile(): ?string
     {
         return $this->profile;
     }
 
-    public function setProfile($profile)
+    public function setProfile(Profile $profile): self
     {
         $this->profile = $profile;
 

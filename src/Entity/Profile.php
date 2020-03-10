@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProfileRepository")
+ * @ORM\Table(name="profiles")
  */
 class Profile
 {
@@ -18,7 +19,7 @@ class Profile
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="profile")
+     * @ORM\OneToOne(targetEntity="User", inversedBy="profiles")
      * @Assert\NotBlank
      */
     private $user;
@@ -34,41 +35,41 @@ class Profile
      */
     private $phone;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser()
+    public function getUser(): ?string
     {
         return $this->user;
     }
 
-    public function setUser($user)
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getBirthDate()
+    public function getBirthDate(): ?string
     {
         return $this->birthdate;
     }
 
-    public function setBirthDate($birthdate)
+    public function setBirthDate(\DateTime $birthdate): self
     {
         $this->birthdate = $birthdate;
 
         return $this;
     }
 
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function setPhone($phone)
+    public function setPhone(int $phone): self
     {
         $this->phone = $phone;
 
