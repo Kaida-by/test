@@ -8,31 +8,25 @@ use App\Entity\User;
 use App\Repository\ProductRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
 
 class AppFixtures extends Fixture
 {
     public function load(\Doctrine\Persistence\ObjectManager $manager)
     {
         for ($i = 0; $i < 10; $i++) {
-            $product = new Product();
-            $product->setTitle('product ' . $i);
-            $product->setDescription('rand text: ' . rand(1, 100));
-            $manager->persist($product);
-            $manager->flush();
-        }
-
-        for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setEmail($i . '@mail.ru');
             $user->setPassword($i . 'qwertyqwerty');
 
-            if (isset($product)) {
-                $user->addProduct($manager->getRepository(Product::class)->find(rand(1, 10)));
-                $user->addProduct($manager->getRepository(Product::class)->find(rand(1, 10)));
+            for ($j = 0; $j < 2; $j++) {
+                $product = new Product();
+                $product->setTitle('Title ' . rand(1, 100));
+                $product->setDescription('descr ' . rand(1, 100));
+                $user->addProduct($product);
             }
 
             $manager->persist($user);
+
             $profile = new Profile();
             $profile->setUser($user);
             $format = "Y,m,d";
@@ -41,9 +35,11 @@ class AppFixtures extends Fixture
             $profile->setBirthDate($date);
             $profile->setPhone('123456789');
             $user->setProfile($profile);
-            $manager->persist($profile);
 
-            $manager->flush();
+            $manager->persist($profile);
         }
+        //$user->removeProduct($product);
+        $manager->remove($user);
+        $manager->flush();
     }
 }

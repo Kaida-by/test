@@ -35,7 +35,7 @@ class User
     private $password;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\ManyToMany(targetEntity="Product", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinTable(name="users_products",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
@@ -44,7 +44,7 @@ class User
     protected $products;
 
     /**
-     * @ORM\OneToOne(targetEntity="Profile", mappedBy="users")
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\NotBlank
      */
     private $profile;
@@ -105,6 +105,13 @@ class User
     public function setProfile(Profile $profile): self
     {
         $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        $this->products->removeElement($product);
 
         return $this;
     }
