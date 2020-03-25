@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+    <h1>Create new User</h1>
+
+    <form method="post" action="{{ path('user_new') }}">
+        <p>
+            <label for="email">Email</label>
+            <input type="text" placeholder="Enter Email" name="email">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+        </p>
+        <p>
+            <label for="birthdate">BirthDate</label>
+         <input type="date" placeholder="Enter BirthDate" name="birthdate" required>
+        </p>
+        <p>
+            <label for="phone">Phone</label>
+            <input type="text" placeholder="Enter Phone" name="phone" required>
+        </p>
+        {#Add Product#}
+        {% for number in 1..5 %}
+            <p>
+                <label for="enable_{{ number }}">Add product to user or not?</label>
+                <input type="checkbox" name="enable_{{ number }}" id="enable_{{ number }}">
+                <br>
+                <label for="title_{{ number }}">Title Product</label>
+                <input type="text" placeholder="Enter Title Product" name="title_{{ number }}">
+                <br>
+                <label for="description_{{ number }}">Product Description</label>
+                <input type="text" placeholder="Enter Description" name="description_{{ number }}">
+            </p>
+        {% endfor %}
+
+        <p><button type="submit" name="submit">Save</button></p>
+    </form>
+
+    <a href="{{ path('user_index') }}">back to list</a>
+{% endblock %}

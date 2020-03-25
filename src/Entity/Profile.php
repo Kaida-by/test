@@ -52,7 +52,7 @@ class Profile
         return $this;
     }
 
-    public function getBirthDate(): ?string
+    public function getBirthDate()
     {
         return $this->birthdate;
     }

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1>Edit User</h1>
+
+    <form method="post" action="{{ path('user_edit', {'id': user.id}) }}">
+        <p>
+            <label for="email">Email</label>
+            <input type="text" placeholder="Enter Email" name="email" value="{{ user.email }}">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+        </p>
+        <p>
+            <label for="birthdate">BirthDate</label>
+            <input type="text" placeholder="Enter BirthDate" name="birthdate" value="{{ profile.birthdate|date("m/d/Y") }}" required>
+        </p>
+        <p>
+            <label for="phone">Phone</label>
+            <input type="text" placeholder="Enter Phone" name="phone" value="{{ profile.phone }}" required>
+        </p>
+
+        {#Add Product#}
+
+        {% for product in products %}
+            <p>
+                <label for="enable_{{ product.id }}">Add product to user or not?</label>
+                <input type="checkbox" name="enable_{{ product.id }}" id="enable_{{ product.id }}" checked="checked">
+                <br>
+                <label for="title_{{ product.id }}">Title Product</label>
+                <input type="text" placeholder="Enter Title Product" name="title_{{ product.id }}" value="{{ product.title }}">
+                <br>
+                <label for="description_{{ product.id }}">Product Description</label>
+                <input type="text" placeholder="Enter Description" name="description_{{ product.id }}" value="{{ product.description }}">
+            </p>
+        {% endfor %}
+        {% if products|length < 5 %}
+            {% for number in products|length +1 ..5 %}
+                <p>
+                    <label for="enableAdd_{{ number }}">Add product to user or not?</label>
+                    <input type="checkbox" name="enableAdd_{{ number }}" id="enableAdd_{{ number }}">
+                    <br>
+                    <label for="title_{{ number }}">Title Product</label>
+                    <input type="text" placeholder="Enter Title Product" name="title_{{ number }}">
+                    <br>
+                    <label for="description_{{ number }}">Product Description</label>
+                    <input type="text" placeholder="Enter Description" name="description_{{ number }}">
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        <p><button type="submit" name="submit">Save</button></p>
+    </form>
+
+    <a href="{{ path('user_index') }}">back to list</a>
+{% endblock %}

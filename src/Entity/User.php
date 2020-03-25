@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
  */
-class User
+class User implements \Countable
 {
     /**
      * @ORM\Id()
@@ -92,12 +92,19 @@ class User
         return $this;
     }
 
-    public function getProduct(): ?string
+    public function setProduct(Product $product): self
+    {
+        $this->products = $product;
+
+        return $this;
+    }
+
+    public function getProduct()
     {
         return $this->products;
     }
 
-    public function getProfile(): ?string
+    public function getProfile()
     {
         return $this->profile;
     }
@@ -114,5 +121,13 @@ class User
         $this->products->removeElement($product);
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function count()
+    {
+        return count($this->products);
     }
 }
