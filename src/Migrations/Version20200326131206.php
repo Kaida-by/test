@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200325140258 extends AbstractMigration
+final class Version20200326131206 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -27,8 +27,8 @@ final class Version20200325140258 extends AbstractMigration
         $this->addSql('CREATE TABLE users (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(150) NOT NULL, password VARCHAR(64) NOT NULL, UNIQUE INDEX UNIQ_1483A5E9E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE users_products (user_id INT NOT NULL, product_id INT NOT NULL, INDEX IDX_C8FB7180A76ED395 (user_id), INDEX IDX_C8FB71804584665A (product_id), PRIMARY KEY(user_id, product_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE profiles ADD CONSTRAINT FK_8B308530A76ED395 FOREIGN KEY (user_id) REFERENCES users (id)');
-        $this->addSql('ALTER TABLE users_products ADD CONSTRAINT FK_C8FB7180A76ED395 FOREIGN KEY (user_id) REFERENCES users (id)');
-        $this->addSql('ALTER TABLE users_products ADD CONSTRAINT FK_C8FB71804584665A FOREIGN KEY (product_id) REFERENCES products (id)');
+        $this->addSql('ALTER TABLE users_products ADD CONSTRAINT FK_C8FB7180A76ED395 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE users_products ADD CONSTRAINT FK_C8FB71804584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE');
     }
 
     public function down(Schema $schema) : void

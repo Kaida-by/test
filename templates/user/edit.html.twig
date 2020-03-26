@@ -8,7 +8,7 @@
     <form method="post" action="{{ path('user_edit', {'id': user.id}) }}">
         <p>
             <label for="email">Email</label>
-            <input type="text" placeholder="Enter Email" name="email" value="{{ user.email }}">
+            <input type="text" placeholder="Enter Email" name="email" value="{{ user.email }}" required>
         </p>
         <p>
             <label for="password">Password</label>
@@ -16,7 +16,7 @@
         </p>
         <p>
             <label for="birthdate">BirthDate</label>
-            <input type="text" placeholder="Enter BirthDate" name="birthdate" value="{{ profile.birthdate|date("m/d/Y") }}" required>
+            <input type="date" placeholder="Enter BirthDate" name="birthdate" required>
         </p>
         <p>
             <label for="phone">Phone</label>
@@ -43,11 +43,11 @@
                     <label for="enableAdd_{{ number }}">Add product to user or not?</label>
                     <input type="checkbox" name="enableAdd_{{ number }}" id="enableAdd_{{ number }}">
                     <br>
-                    <label for="title_{{ number }}">Title Product</label>
-                    <input type="text" placeholder="Enter Title Product" name="title_{{ number }}">
+                    <label for="titleAdd_{{ number }}">Title Product</label>
+                    <input type="text" placeholder="Enter Title Product" name="titleAdd_{{ number }}">
                     <br>
-                    <label for="description_{{ number }}">Product Description</label>
-                    <input type="text" placeholder="Enter Description" name="description_{{ number }}">
+                    <label for="descriptionAdd_{{ number }}">Product Description</label>
+                    <input type="text" placeholder="Enter Description" name="descriptionAdd_{{ number }}">
                 </p>
             {% endfor %}
         {% endif %}
