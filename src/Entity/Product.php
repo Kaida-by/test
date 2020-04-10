@@ -31,6 +31,14 @@ class Product
      */
     private $description;
 
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return (string) $this->title;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

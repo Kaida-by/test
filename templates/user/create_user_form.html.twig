@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+
+            {{ form_start(form) }}
+
+            <ul id="email-fields-list"
+                data-prototype="{{ form_widget(form.products.vars.prototype)|e }}"
+                data-widget-tags="{{ '<li></li>'|e }}"
+                data-widget-counter="{{ form.products|length }}">
+
+                {% for productField in form.products %}
+                    <li>
+                        {{ form_errors(productField) }}
+                        {{ form_widget(productField) }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button type="button"
+                    class="add-another-collection-widget"
+                    data-list-selector="#email-fields-list">Add another product</button>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+  window.onload = function () {
+    $('.add-another-collection-widget').click(function (e) {
+      var list = $($(this).attr('data-list-selector'));
+      // Try to find the counter of the list or use the length of the list
+      var counter = list.data('widget-counter') || list.children().length;
+
+      // grab the prototype template
+      var newWidget = list.attr('data-prototype');
+      // replace the "__name__" used in the id and name of the prototype
+      // with a number that's unique to your emails
+      // end name attribute looks like name="contact[emails][2]"
+      newWidget = newWidget.replace(/__name__/g, counter);
+      // Increase the counter
+      counter++;
+      // And store it, the length cannot be used if deleting widgets is allowed
+      list.data('widget-counter', counter);
+
+      // create a new list element and add it to the list
+      var newElem = $(list.attr('data-widget-tags')).html(newWidget);
+      newElem.appendTo(list);
+    });
+  }
+</script>
+
+</body>
+</html>

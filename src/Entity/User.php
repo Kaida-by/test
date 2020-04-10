@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -92,14 +93,14 @@ class User implements \Countable
         return $this;
     }
 
-    public function setProduct(Product $product): self
+    public function removeProduct(Product $product): self
     {
-        $this->products = $product;
+        $this->products->removeElement($product);
 
         return $this;
     }
 
-    public function getProduct()
+    public function getProducts(): Collection
     {
         return $this->products;
     }
@@ -113,12 +114,7 @@ class User implements \Countable
     {
         $this->profile = $profile;
 
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        $this->products->removeElement($product);
+        $this->profile->setUser($this);
 
         return $this;
     }
